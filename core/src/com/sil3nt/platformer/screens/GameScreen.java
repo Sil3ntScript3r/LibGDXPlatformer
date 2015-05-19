@@ -28,7 +28,7 @@ public class GameScreen implements Screen {
         level.update(delta);
         player.update(delta);
 
-        level.render();
+        level.render(player);
     }
 
     @Override

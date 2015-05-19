@@ -1,5 +1,6 @@
 package com.sil3nt.platformer.levels;
 
+import com.sil3nt.platformer.entities.Player;
 import com.sil3nt.platformer.tiles.TileBackground;
 import com.sil3nt.platformer.tiles.TileBase;
 import com.sil3nt.platformer.tiles.TileWall;
@@ -40,8 +41,8 @@ public abstract class LevelBase {
     public void update(float delta)
     {}
 
-    public void render()
+    public void render(Player player)
     {
-        renderer.render(tiles);
+        renderer.render(tiles, player);
     }
 }

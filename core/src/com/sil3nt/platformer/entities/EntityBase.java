@@ -11,4 +11,14 @@ public abstract class EntityBase {
     }
 
     public void update(float delta) {}
+
+    public float getX()
+    {
+        return x;
+    }
+
+    public float getY()
+    {
+        return y;
+    }
 }
