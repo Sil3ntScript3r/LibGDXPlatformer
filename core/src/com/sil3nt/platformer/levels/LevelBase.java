@@ -1,48 +1,44 @@
 package com.sil3nt.platformer.levels;
 
 import com.sil3nt.platformer.entities.Player;
-import com.sil3nt.platformer.tiles.TileBackground;
-import com.sil3nt.platformer.tiles.TileBase;
-import com.sil3nt.platformer.tiles.TileWall;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.sil3nt.platformer.physics.PhysicsHandler;
+import com.sil3nt.platformer.tiles.Tiles;
 
 public abstract class LevelBase {
     protected int[][] tileLayout;
-    protected List<TileBase> tiles;
+
+    protected Player player;
+
     protected LevelRenderer renderer;
+    protected PhysicsHandler physics;
 
     public LevelBase()
     {
         renderer = new LevelRenderer();
-        tiles = new ArrayList<TileBase>();
-    }
 
-    public void buildLevel()
-    {
-        for(int y = 0; y < tileLayout.length; y++)
-        {
-            for(int x = 0; x < tileLayout[y].length; x++)
-            {
-                switch(tileLayout[y][x])
-                {
-                    case 0:
-                        tiles.add(new TileWall(x * 64, y * 64));
-                        break;
-                    case 1:
-                        tiles.add(new TileBackground(x * 64, y * 64));
-                        break;
-                }
-            }
-        }
+        player = new Player(128, 128);
+
+        physics = new PhysicsHandler(player);
     }
 
     public void update(float delta)
-    {}
-
-    public void render(Player player)
     {
-        renderer.render(tiles, player);
+        player.update(delta);
+        physics.update(delta);
+    }
+
+    public void render()
+    {
+        renderer.render(tileLayout, player);
+    }
+
+    public Tiles checkTile(float x, float y)
+    {
+        return Tiles.getByIndex(tileLayout[(int)x / 64][(int)y / 64]);
+    }
+
+    public Player getPlayer()
+    {
+        return player;
     }
 }

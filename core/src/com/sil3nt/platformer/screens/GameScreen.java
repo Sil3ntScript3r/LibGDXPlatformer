@@ -1,19 +1,19 @@
 package com.sil3nt.platformer.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.sil3nt.platformer.entities.Player;
+import com.sil3nt.platformer.input.InputHandlerGame;
 import com.sil3nt.platformer.levels.LevelBase;
+import com.sil3nt.platformer.tiles.Tiles;
 
 public class GameScreen implements Screen {
     private LevelBase level;
-    private Player player;
 
     public GameScreen(LevelBase level)
     {
         this.level = level;
-        this.level.buildLevel();
 
-        player = new Player(64, 64);
+        Gdx.input.setInputProcessor(new InputHandlerGame(level.getPlayer()));
     }
 
     @Override
@@ -26,9 +26,8 @@ public class GameScreen implements Screen {
     public void render(float delta)
     {
         level.update(delta);
-        player.update(delta);
 
-        level.render(player);
+        level.render();
     }
 
     @Override

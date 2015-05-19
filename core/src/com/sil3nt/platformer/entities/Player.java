@@ -4,26 +4,42 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
 public class Player extends EntityBase {
+    protected int maxJumps;
+    protected int numJumps;
+
     public Player(float x, float y)
     {
-        super(x, y);
+        super(x, y, 4);
+        maxJumps = 2;
+        numJumps = maxJumps;
     }
 
     public void update(float delta)
     {
+        super.update(delta);
+
         if(Gdx.input.isKeyPressed(Keys.A))
-            moveX(-256, delta);
+            moveX(true, delta);
         else if(Gdx.input.isKeyPressed(Keys.D))
-            moveX(256, delta);
+            moveX(false, delta);
     }
 
-    public void render()
+    public boolean keyDown(int keycode)
     {
+        if(keycode == Keys.SPACE || keycode == Keys.W)
+        {
+            jump();
+            return true;
+        }
 
+        return false;
     }
 
-    public void moveX(float amount, float delta)
+    private void jump()
     {
-        x += amount * delta;
+        if(numJumps != 0)
+        {
+            velocityY = (speed * 64);
+        }
     }
 }
